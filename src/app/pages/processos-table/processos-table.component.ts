@@ -8,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class ProcessosTableComponent implements OnInit {
 
   constructor() { }
-
+  terra = ['Processo', 'Cliente', 'Data de Abertura', 'Data de Encerramento', 'Status', 'Ações']
+  tabelaColun = ['Processo', 'Cliente', 'Data de Abertura', 'Data de Encerramento', 'Status', 'Ações'];
+  tabelaItemList = [this.terra, this.terra, this.terra];
+  
   ngOnInit(): void {
 /*     var convert = require('xml-js');
     var xml =

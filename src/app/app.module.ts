@@ -7,6 +7,8 @@ import { ProcessosTableComponent } from './pages/processos-table/processos-table
 import { HeaderComponent } from './components/header/header.component';
 import { IdentificacaoPaginaComponent } from './components/identificacao-pagina/identificacao-pagina.component';
 import { TableComponent } from './components/table/table.component';
+import { BrokerBackendService } from './services/brocker-backend/brocker-backend.service';
+import { ProcessoServiceService } from './services/processo-service/processo-service.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,10 @@ import { TableComponent } from './components/table/table.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    BrokerBackendService,
+    ProcessoServiceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
