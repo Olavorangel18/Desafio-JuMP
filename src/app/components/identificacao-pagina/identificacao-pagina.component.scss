@@ -1,0 +1,28 @@
+div{
+    padding-top: 30px;
+    padding-left: 60px;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 60px;
+}
+
+h2{
+    font-size: 30px;
+    line-height: 33px;
+    font-feature-settings: 'pnum' on, 'lnum' on;
+}
+
+button{
+    background: #0C326F;
+    border-radius: 20px;
+    width: 180px;
+    height: 50px;
+    padding: 8px 24px;
+    color: white;
+    border: none;
+    line-height: 20px;
+    font-family: Rawline SemiBold;
+    font-size: 16px;
+    cursor: pointer;
+
+}

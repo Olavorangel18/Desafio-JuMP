@@ -10,7 +10,7 @@ export class ProcessosTableComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    var convert = require('xml-js');
+/*     var convert = require('xml-js');
     var xml =
     '<?xml version="1.0" encoding="utf-8"?>' +
     '<note importance="high" logged="true">' +
@@ -20,7 +20,7 @@ export class ProcessosTableComponent implements OnInit {
     '</note>';
     var result1 = convert.xml2json(xml, {compact: true, spaces: 4});
     var result2 = convert.xml2json(xml, {compact: false, spaces: 4});
-    console.log(result1, '\n', result2);
+    console.log(result1, '\n', result2); */
   }
 
 }
