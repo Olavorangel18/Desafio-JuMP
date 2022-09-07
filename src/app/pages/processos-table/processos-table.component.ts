@@ -1,10 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Movimento } from 'src/app/models/movimento.model';
 import { Processo } from 'src/app/models/processo.model';
 import { ProcessoServiceService } from 'src/app/services/processo-service/processo-service.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Unidade } from 'src/app/models/unidade.model';
 import { Input } from 'src/app/models/input.model';
+import { xml2json } from 'xml-js';
 
 
 @Component({
@@ -17,33 +18,39 @@ export class ProcessosTableComponent implements OnInit {
   constructor(
     private service: ProcessoServiceService,
     private sanitizer:DomSanitizer
-    
-  ) { }
-  convert = require('xml-js')
-  tabelaColun = ['Processo', 'Conclusão', "",'Petição', "", 'Desistência',"",'Expedição'];
-  tabelaItemList : Processo[] = [];
-  json = "";
-  xml = "";
-  responseXML:any;
-  processo: Processo|undefined;
-  modalTitle = "";
-  labelTitle = "";
-  inputLeituraTempoContent = "";
-  mostrarImagem = false;
-  inputLeituraTempo = false;
-  processoXML: any = "";
-  unidade: Unidade | undefined;
-  inputsInformacaoPedido: Input[] = [];
-  mostrarInformacoesPedido = false;
-  inputValue:string = "";
-  carregamentoInformacao:boolean = false;
+  ) {}
   
+  //Tabela - Informações de Exibição
+  tabelaColuna: string[] = ['Processo', 'Conclusão', "",'Petição', "", 'Desistência',"",'Expedição'];
+  tabelaItemList: Processo[] = [];
+  unidade: Unidade | undefined;
+
+  //Documento - Tradução de Informações XML/JSON
+  json: string | object = {};
+  xml: XMLDocument | string = "";
+  responseXML:SafeHtml | string | undefined;
+  processoXML: SafeHtml | undefined;
+
+  //Modal - Informações de Exibição
+  modalTitle: string | undefined;
+  modalLabelTitle: string | undefined;
+  mostrarXMLModal: boolean = false;
+  mostrarInformacoesPedidoModal: boolean = false;
+  inputLeituraTempoContentModal: string | undefined;
+  inputLeituraTempoModal: boolean = false;
+  carregamentoInformacao:boolean = false;
+  inputsInformacaoPedido: Input[] = [];
+  
+  //Formulario - Modal (Incluir Processo)
+  processo: Processo|undefined;
+  inputValue: string = "7065";
+
   ngOnInit(): void {
     this.recuperarImagemProcesso();
   }
 
   //********************************************************
-  //              Listagem de vagas por empresa
+  //              Pegar Imagem do Processo
   //********************************************************
 
     recuperarImagemProcesso(){
@@ -54,29 +61,35 @@ export class ProcessosTableComponent implements OnInit {
               },
               responseError => {    
                 this.transformarXMLParaJSON(responseError.error.text)
-                this.formatarProcessoJSON(JSON.parse(this.json));
+                this.formatarProcessoJSON(JSON.parse(String(this.json)));
                 this.carregamentoInformacao = false;
               }
           );
     }
-
-    consultarUnidade(){
+  
+    consultarUnidadeModal(){
       this.carregamentoInformacao = true;
-      this.service.getImagemConsulta(this.inputValue)
+      if(this.inputValue){
+        this.service.getImagemConsulta(this.inputValue)
           .subscribe(
               response => {
               },
               responseError => {    
                 this.transformarXMLParaJSON(responseError.error.text)
-                this.formatarProcessoJSON(JSON.parse(this.json));
+                this.formatarProcessoJSON(JSON.parse(String(this.json)));
                 this.carregamentoInformacao = false;
               }
           );
+      }
     }
+
+  //********************************************************
+  //           Recuperar Informações do Processo
+  //********************************************************
 
     recuperarInformacoesProcesso(unidade:Unidade){
       this.carregamentoInformacao = true;
-      this.mostrarInformacoesPedido = true;
+      this.mostrarInformacoesPedidoModal = true;
       this.service.pegarInformacaoUnidade(unidade)
           .subscribe(
               response => {
@@ -102,22 +115,19 @@ export class ProcessosTableComponent implements OnInit {
           );
     }
 
+  //********************************************************
+  //   Manipulação de Informações do Processo(XML -> JSON)
+  //********************************************************
+
     transformarXMLParaJSON(xml: string){
        this.responseXML = xml;
-       this.json = this.convert.xml2json(xml, {compact: true, spaces: 4});
-    }
-
-    renderizarProcessoXML(){
-      const parser = new DOMParser();
-      const xml = parser.parseFromString(String(this.responseXML), 'application/xml');
-      this.xml = xml.documentElement.outerHTML;
-      this.processoXML = this.sanitizer.bypassSecurityTrustHtml(this.xml);
+       this.json = xml2json(xml, {compact: true, spaces: 4});
     }
 
     formatarProcessoJSON(json:any){
       let itensProcesso = json.svg.g.g;
       let movimentoLista : Movimento[] = []
-      itensProcesso.forEach((item:any, index:Number) => {
+      itensProcesso.forEach((item:any) => {
         
         if(!item.g.length){
           movimentoLista.push(
@@ -147,7 +157,7 @@ export class ProcessosTableComponent implements OnInit {
       movimentoLista[4].tempo = movimentoLista[6].tempo;
 
       this.processo = new Processo(
-       "7065",
+       this.inputValue,
        movimentoLista[0],
        movimentoLista[1],
        movimentoLista[3],
@@ -156,48 +166,69 @@ export class ProcessosTableComponent implements OnInit {
       this.tabelaItemList.push(this.processo);
     }
 
+  //********************************************************
+  //            Renderizar XML no Modal
+  //********************************************************
+
+    renderizarProcessoXML(){
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(String(this.responseXML), 'application/xml');
+      this.xml = xml.documentElement.outerHTML;
+      this.processoXML = this.sanitizer.bypassSecurityTrustHtml(this.xml);
+    }
+  
     rastrearInput(e:any){
       this.inputValue = e.target.value;
     }
 
     enviarFormulario(e:any){
       e.preventDefault();
-      console.log(this.inputValue)
       this.inputValue = "";
       this.fecharModal();
+    }
+
+  //********************************************************
+  //                  Exibições de Modal
+  //********************************************************
+    
+    abrirModal(){
+      document.querySelector('.modal')?.classList.add('modal-ativo');
+      document.querySelector('.modal')?.classList.remove('modal-inativo');
     }
 
     fecharModal(){
       let modal = document.querySelector('.modal');
       modal?.classList.add('modal-inativo');
       modal?.classList.remove('modal-ativo');
+      
       setTimeout(() => {
         modal?.firstElementChild?.classList.remove('h-200px');
-        this.inputLeituraTempo = false;
-        this.mostrarImagem = false;
-        this.mostrarInformacoesPedido = false;
+        this.inputLeituraTempoModal = false;
+        this.mostrarXMLModal = false;
+        this.mostrarInformacoesPedidoModal = false;
         this.limparCamposModais();
       }, 400);
+      
       this.carregamentoInformacao= false;
     }
 
-    abrirModal(){
-      document.querySelector('.modal')?.classList.add('modal-ativo');
-      document.querySelector('.modal')?.classList.remove('modal-inativo');
-    }
-
+  //********************************************************
+  //        Preenchimento de Informações (Modal)
+  //********************************************************
 
     preencherModalInformacoesTempo(e:any){
-      this.inputLeituraTempo = true;
-      this.mostrarImagem = false;
-      this.mostrarInformacoesPedido = false;
+      this.inputLeituraTempoModal = true;
+      this.mostrarXMLModal = false;
+      this.mostrarInformacoesPedidoModal = false;
       this.modalTitle = e.currentTarget.id.trim();
-      this.inputLeituraTempoContent = e.currentTarget.classList[0];
+      this.inputLeituraTempoContentModal = e.currentTarget.classList[0];
       
       if(this.modalTitle == "Petição" || this.modalTitle == "Conclusão" || this.modalTitle == "Desistência"){
-        this.labelTitle =`Tempo da ${this.modalTitle}`;
+        this.modalLabelTitle =`Tempo da ${this.modalTitle}`;
       }
+      
       document.querySelector('.modal')?.firstElementChild?.classList.add('h-200px');
+
     }
 
     preencherModalInformacoesPedido(e:any){
@@ -211,12 +242,14 @@ export class ProcessosTableComponent implements OnInit {
         undefined,
         undefined,
         undefined,);
+
       this.recuperarInformacoesProcesso(unidade);
-      this.inputLeituraTempo = false;
-      this.mostrarImagem = false;
+      this.inputLeituraTempoModal = false;
+      this.mostrarXMLModal = false;
+
     }
 
-    criarInputsModalInformacoesPedido(){
+    criarInputsModalInformacoesPedido(){ 
       let inputs = [
         new Input(
           "Duração Média do Pedido",
@@ -253,19 +286,24 @@ export class ProcessosTableComponent implements OnInit {
       ]
 
       return inputs;
+
     }
 
     mostrarImagemModal(event:any){
-      this.mostrarImagem = true;
-      this.inputLeituraTempo = false;
-      this.mostrarInformacoesPedido = false;
+      this.mostrarXMLModal = true;
+      this.inputLeituraTempoModal = false;
+      this.mostrarInformacoesPedidoModal = false;
       this.renderizarProcessoXML();
     }
 
+  //********************************************************
+  //        Limpeza de Informações (Modal)
+  //******************************************************** 
+
     limparCamposModais(){
       this.modalTitle = "";
-      this.labelTitle = "";
-      this.inputLeituraTempoContent = "";
+      this.modalLabelTitle = "";
+      this.inputLeituraTempoContentModal = "";
       this.inputsInformacaoPedido = [];
     }
 

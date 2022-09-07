@@ -12,8 +12,8 @@ export class ModalComponent implements OnInit {
 
   //Modal - Informações Gerais
   @Output() fecharModalEmitter: EventEmitter<any> = new EventEmitter();
-  @Input() modalTitle:string = "";
-  @Input() labelTitle:String = "";
+  @Input() modalTitle: string|undefined;
+  @Input() labelTitle: string|undefined;
 
   //Modal - Imagem/XML (Controls)
   @Input() mostrarImagem:boolean = false;
@@ -21,7 +21,7 @@ export class ModalComponent implements OnInit {
 
   //Modal - Tempo/Processo (Controls)
   @Input() inputLeituraTempo:boolean = true;
-  @Input() inputLeituraTempoContent:string = "";
+  @Input() inputLeituraTempoContent: string | undefined;;
 
   //Modal - Estatisticas/Processo (Controls)
   @Input() carregamentoInformacao:boolean = false;
@@ -32,7 +32,7 @@ export class ModalComponent implements OnInit {
   @Output() enviarFormularioInputEmitter: EventEmitter<any> = new EventEmitter();
   @Output() consultarUnidadeInputEmitter: EventEmitter<any> = new EventEmitter();
   @Input() incluirProcesso:boolean = false
-  @Input() inputValue:string = "";
+  @Input() inputValue: string | undefined;
   @Input() inputsPedido: any;
 
   ngOnInit(): void {

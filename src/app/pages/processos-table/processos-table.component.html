@@ -7,23 +7,23 @@
     (abrirModalEmitter)="abrirModal();preencherModalInformacoesTempo($event);" 
     (abrirModalImagemEmitter)="abrirModal();mostrarImagemModal($event);"
     (abrirModalInformacaoEmitter)="abrirModal();preencherModalInformacoesPedido($event);"
-    [tabelaColuna]="tabelaColun" 
+    [tabelaColuna]="tabelaColuna" 
     [tabelaItemList]="tabelaItemList">
   </app-table>
 
 <app-modal    
-  (consultarUnidadeInputEmitter)="consultarUnidade()"
+  (consultarUnidadeInputEmitter)="consultarUnidadeModal()"
   (enviarFormularioInputEmitter)="enviarFormulario($event)"
   (fecharModalEmitter)="fecharModal()"
   (rastrearInputEmitter)="rastrearInput($event)"
   [inputValue]="inputValue"
   [modalTitle]="modalTitle"
-  [labelTitle]="labelTitle"
-  [inputLeituraTempo]="inputLeituraTempo"
-  [inputLeituraTempoContent]="inputLeituraTempoContent"
-  [mostrarImagem]="mostrarImagem"
+  [labelTitle]="modalLabelTitle"
+  [inputLeituraTempo]="inputLeituraTempoModal"
+  [inputLeituraTempoContent]="inputLeituraTempoContentModal"
+  [mostrarImagem]="mostrarXMLModal"
   [htmlImagem]="processoXML"
-  [mostrarInformacaoPedido]="mostrarInformacoesPedido"
+  [mostrarInformacaoPedido]="mostrarInformacoesPedidoModal"
   [carregamentoInformacao]="carregamentoInformacao"
   [inputsPedido]="inputsInformacaoPedido">
 </app-modal>
