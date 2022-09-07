@@ -1,0 +1,114 @@
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+  }
+
+.modal-ativo {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+.modal-inativo{
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal > div {
+    width: 400px;
+    position: relative;
+    margin: 10% auto;
+    padding: 15px 20px;
+    background: #fff;
+    height: 50%;
+    max-height: 600px;
+    min-height: 200px;
+    overflow: scroll;
+}
+
+.fechar {
+    position: absolute;
+    width: 30px;
+    right: -2px;
+    margin-top: -12px;
+}
+
+.input{
+    background: #FFFFFF;
+    border: 1px solid #888888;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px 4px 4px 16px;
+    gap: 8px;
+    height: 35px;
+    margin-top: 15px;
+    color: #828282;
+    margin-bottom: 15px;
+}
+
+.input-real{
+    background: #FFFFFF;
+    border: 1px solid #888888;
+    border-radius: 4px;
+    padding: 4px 4px 4px 16px;
+    height: 35px;
+    color: #828282;
+    max-width: 360px;
+    width: 100%;
+    margin: 15px 0;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+button{
+    padding: 6px 12px;
+    background: #0C326F;
+    color: white;
+    font-family: Rawline SemiBold;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 1000px;
+    border: none;
+    height: 40px;
+    width: 180px;
+    align-self: end;
+}
+
+.h-200px{
+    height: 200px !important;
+}
+
+h2{
+    padding-bottom: 30px;
+}
+
+.xml{
+    display: flex;
+    justify-content: center;
+    margin-left: 50px;
+}
+
+.label{
+    font-family: 'Rawline SemiBold';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    font-feature-settings: 'pnum' on, 'lnum' on;
+    color: #333333;
+}
+

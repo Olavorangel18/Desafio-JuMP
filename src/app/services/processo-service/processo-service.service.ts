@@ -9,7 +9,8 @@ import { BrokerBackendService } from '../brocker-backend/brocker-backend.service
 })
 export class ProcessoServiceService {
 
-  endpointImagem:string = `image/`;
+  endpointImagem:string = `image/7065/?detail_level=3`;
+  endpointImagemConsulta:string = `image/`;
   endpointInformacaoProcesso:string = 'infos/';
 
   constructor(
@@ -17,13 +18,22 @@ export class ProcessoServiceService {
   ) { }
 
   getImagem(): Observable<any> {
-    let unidade = '7065/?detail_level=3'
     return this.brokerBackend
         .connectInBackend(
           this.endpointImagem,
           'GET',
-          unidade,
-          this.getSimpleHeader(),
+          undefined,
+          this.getSimpleHeaderXML(),
+        );
+  }
+
+  getImagemConsulta(unidade:string): Observable<any> {
+    return this.brokerBackend
+        .connectInBackend(
+          `${this.endpointImagemConsulta}/${unidade}/?detail_level=3`,
+          'GET',
+          undefined,
+          this.getSimpleHeaderXML(),
         );
   }
 
@@ -44,4 +54,11 @@ export class ProcessoServiceService {
       'Content-Type': 'application/json'
     });
   }
+
+  getSimpleHeaderXML() {
+    return new HttpHeaders({
+      'Content-Type': 'application/xml'
+    });
+  }
+
 }

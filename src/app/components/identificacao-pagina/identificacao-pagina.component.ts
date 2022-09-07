@@ -1,13 +1,14 @@
-import { AfterContentChecked, Component, Input, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-identificacao-pagina',
   templateUrl: './identificacao-pagina.component.html',
   styleUrls: ['./identificacao-pagina.component.scss']
 })
-export class IdentificacaoPaginaComponent implements OnInit, AfterContentChecked {
+export class IdentificacaoPaginaComponent implements OnInit{
   
   @Input() nomePagina: string | undefined;
+  @Output() abrirFormularioEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor() {
 
@@ -16,9 +17,13 @@ export class IdentificacaoPaginaComponent implements OnInit, AfterContentChecked
   ngOnInit(): void {
   }
 
-  ngAfterContentChecked(): void {
-    console.log(this.nomePagina)
+  abrirModal(){
+    let modal:HTMLElement | null = document.querySelector('.modal')
+    modal?.classList.add('modal-ativo');
+    modal?.firstElementChild?.classList.add('h-200px');
+    console.log("Oi")
   }
+
 
 
 

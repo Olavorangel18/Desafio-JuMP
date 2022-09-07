@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Processo } from 'src/app/models/processo.model';
 
 @Component({
   selector: 'app-table',
@@ -8,7 +9,11 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TableComponent implements OnInit {
 
   @Input() tabelaColuna: string[] | undefined;
-  @Input() tabelaItemList: string[][] | undefined;
+  @Input() tabelaItemList: Processo[] | undefined;
+
+  @Output() abrirModalEmitter: EventEmitter<any> = new EventEmitter()
+  @Output() abrirModalImagemEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() abrirModalInformacaoEmitter: EventEmitter<any> = new EventEmitter()
 
 
 
@@ -17,4 +22,15 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  abrirModal(event:any){
+    this.abrirModalEmitter.emit(event);
+  }
+
+  abrirModalImagem(event:any){
+    this.abrirModalImagemEmitter.emit(event);
+  }
+
+  abrirModalInformacao(event:any){
+    this.abrirModalInformacaoEmitter.emit(event);
+  }
 }

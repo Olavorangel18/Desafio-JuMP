@@ -10,12 +10,13 @@ ul{
 }
 
 li{
-    max-width: 140px;
-    min-width: 140px;
+    max-width: 110px;
+    min-width: 110px;
     display: flex;
     height: 80px;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .emotes{

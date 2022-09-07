@@ -1,7 +1,32 @@
 <div id="app">
     <app-header></app-header>
-    <app-identificacao-pagina [nomePagina]="'Processos'"></app-identificacao-pagina>
-    <app-table [tabelaColuna]="tabelaColun" [tabelaItemList]="tabelaItemList"></app-table>
+    <app-identificacao-pagina
+      [nomePagina]="'Processos'">
+      (abrirFormularioEmitter)="abrirLgo()"
+    </app-identificacao-pagina>
+    <app-table 
+    (abrirModalEmitter)="abrirModal();preencherModalInformacoesTempo($event);" 
+    (abrirModalImagemEmitter)="abrirModal();mostrarImagemModal($event);"
+    (abrirModalInformacaoEmitter)="abrirModal();preencherModalInformacoesPedido($event);"
+    [tabelaColuna]="tabelaColun" 
+    [tabelaItemList]="tabelaItemList">
+    </app-table>
 </div>
+<app-modal    
+              (consultarUnidadeInputEmitter)="consultarUnidade()"
+              (enviarFormularioInputEmitter)="enviarFormulario($event)"
+              (fecharModalEmitter)="fecharModal()"
+              (rastrearInputEmitter)="rastrearInput($event)"
+              [inputValue]="inputValue"
+              [modalTitle]="modalTitle"
+              [labelTitle]="labelTitle"
+              [inputLeitura]="inputLeitura"
+              [inputLeituraContent]="inputLeituraContent"
+              [mostrarImagem]="mostrarImagem"
+              [html]="processoXML"
+              [mostrarInformacaoPedido]="mostrarInformacoesPedido"
+              [carregamentoInformacao]="carregamentoInformacao"
+              [inputsPedido]="inputsInformacaoPedido">
+></app-modal>
 
 
