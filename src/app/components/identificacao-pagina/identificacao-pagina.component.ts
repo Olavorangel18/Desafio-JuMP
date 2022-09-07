@@ -7,6 +7,7 @@ import { AfterContentChecked, Component, EventEmitter, Input, OnInit, Output } f
 })
 export class IdentificacaoPaginaComponent implements OnInit{
   
+  // Configuração da pagina
   @Input() nomePagina: string | undefined;
   
   constructor() {
@@ -15,14 +16,15 @@ export class IdentificacaoPaginaComponent implements OnInit{
  
   ngOnInit(): void {
   }
-
+  
+  //********************************************************
+  //              Modal - Metodos Gerais
+  //********************************************************
+  
   abrirModal(){
     let modal:HTMLElement | null = document.querySelector('.modal')
     modal?.classList.add('modal-ativo');
     modal?.firstElementChild?.classList.add('h-200px');
   }
-
-
-
-
+  
 }

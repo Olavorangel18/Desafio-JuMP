@@ -8,9 +8,11 @@ import { Processo } from 'src/app/models/processo.model';
 })
 export class TableComponent implements OnInit {
 
+  //Tabela - Controladores de Exibição
   @Input() tabelaColuna: string[] | undefined;
   @Input() tabelaItemList: Processo[] | undefined;
 
+  //Modal - Controladores de Exibição
   @Output() abrirModalEmitter: EventEmitter<any> = new EventEmitter()
   @Output() abrirModalImagemEmitter: EventEmitter<any> = new EventEmitter();
   @Output() abrirModalInformacaoEmitter: EventEmitter<any> = new EventEmitter()
@@ -21,6 +23,10 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  //********************************************************
+  //              Modal - Metodos Gerais
+  //********************************************************
 
   abrirModal(event:any){
     this.abrirModalEmitter.emit(event);
