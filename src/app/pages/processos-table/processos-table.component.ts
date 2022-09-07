@@ -28,9 +28,9 @@ export class ProcessosTableComponent implements OnInit {
   processo: Processo|undefined;
   modalTitle = "";
   labelTitle = "";
-  inputLeituraContent = "";
+  inputLeituraTempoContent = "";
   mostrarImagem = false;
-  inputLeitura = false;
+  inputLeituraTempo = false;
   processoXML: any = "";
   unidade: Unidade | undefined;
   inputsInformacaoPedido: Input[] = [];
@@ -173,7 +173,7 @@ export class ProcessosTableComponent implements OnInit {
       modal?.classList.remove('modal-ativo');
       setTimeout(() => {
         modal?.firstElementChild?.classList.remove('h-200px');
-        this.inputLeitura = false;
+        this.inputLeituraTempo = false;
         this.mostrarImagem = false;
         this.mostrarInformacoesPedido = false;
         this.limparCamposModais();
@@ -188,11 +188,11 @@ export class ProcessosTableComponent implements OnInit {
 
 
     preencherModalInformacoesTempo(e:any){
-      this.inputLeitura = true;
+      this.inputLeituraTempo = true;
       this.mostrarImagem = false;
       this.mostrarInformacoesPedido = false;
       this.modalTitle = e.currentTarget.id.trim();
-      this.inputLeituraContent = e.currentTarget.classList[0];
+      this.inputLeituraTempoContent = e.currentTarget.classList[0];
       
       if(this.modalTitle == "Petição" || this.modalTitle == "Conclusão" || this.modalTitle == "Desistência"){
         this.labelTitle =`Tempo da ${this.modalTitle}`;
@@ -212,7 +212,7 @@ export class ProcessosTableComponent implements OnInit {
         undefined,
         undefined,);
       this.recuperarInformacoesProcesso(unidade);
-      this.inputLeitura = false;
+      this.inputLeituraTempo = false;
       this.mostrarImagem = false;
     }
 
@@ -257,7 +257,7 @@ export class ProcessosTableComponent implements OnInit {
 
     mostrarImagemModal(event:any){
       this.mostrarImagem = true;
-      this.inputLeitura = false;
+      this.inputLeituraTempo = false;
       this.mostrarInformacoesPedido = false;
       this.renderizarProcessoXML();
     }
@@ -265,7 +265,7 @@ export class ProcessosTableComponent implements OnInit {
     limparCamposModais(){
       this.modalTitle = "";
       this.labelTitle = "";
-      this.inputLeituraContent = "";
+      this.inputLeituraTempoContent = "";
       this.inputsInformacaoPedido = [];
     }
 

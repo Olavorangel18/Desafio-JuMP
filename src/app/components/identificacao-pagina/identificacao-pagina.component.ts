@@ -8,8 +8,7 @@ import { AfterContentChecked, Component, EventEmitter, Input, OnInit, Output } f
 export class IdentificacaoPaginaComponent implements OnInit{
   
   @Input() nomePagina: string | undefined;
-  @Output() abrirFormularioEmitter: EventEmitter<any> = new EventEmitter();
-
+  
   constructor() {
 
   }
@@ -21,7 +20,6 @@ export class IdentificacaoPaginaComponent implements OnInit{
     let modal:HTMLElement | null = document.querySelector('.modal')
     modal?.classList.add('modal-ativo');
     modal?.firstElementChild?.classList.add('h-200px');
-    console.log("Oi")
   }
 
 

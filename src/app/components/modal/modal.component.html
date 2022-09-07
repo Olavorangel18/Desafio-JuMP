@@ -6,23 +6,26 @@
         </svg>
     </a>
     <h2>{{modalTitle}}</h2>
-    <div *ngIf="!mostrarInformacaoPedido && !mostrarImagem && !inputLeitura">
+
+    <div *ngIf = "carregamentoInformacao">Carregando...</div>
+    
+    <div *ngIf="!mostrarInformacaoPedido && !mostrarImagem && !inputLeituraTempo">
       <form (submit)="enviarFormulario($event)">
         <label>Processo ID</label>
         <input class="input-real" type="text" placeholder="Digite o ID do processo" [value]="inputValue" (change)="rastrearInput($event)">
         <button (click)="consultarUnidade()" >Consultar Unidade</button>
       </form>
     </div>
-    <div style="padding-bottom:30px;padding-top: 15px;" *ngIf="inputLeitura">
+
+    <div style="padding-bottom:30px;padding-top: 15px;" *ngIf="inputLeituraTempo">
         <label class="label">{{labelTitle}}</label>
         <div class="input">
-            <p>{{inputLeituraContent}}</p>
+            <p>{{inputLeituraTempoContent}}</p>
         </div>
     </div>
-    <div class="xml" *ngIf="mostrarImagem" [innerHTML] = "html">
 
-    </div>
-    <div *ngIf = "carregamentoInformacao">Carregando...</div>
+    <div class="xml" *ngIf="mostrarImagem" [innerHTML] = "htmlImagem"></div>
+
     <div *ngIf = "mostrarInformacaoPedido">
       <div *ngFor="let input of inputsPedido">
         <label class="label">{{input.key}}</label>
@@ -31,5 +34,6 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>
