@@ -1,5 +1,8 @@
 # DesafioJump
 
+## Video de Explicação (OPCIONAL)
+[![Video de explicação](https://img.youtube.com/vi/dYtEAsaOUVM/0.jpg)](https://www.youtube.com/watch?v=dYtEAsaOUVM)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.1.
 
 ## Development server
