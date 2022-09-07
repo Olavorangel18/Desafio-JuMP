@@ -78,6 +78,7 @@ export class ProcessosTableComponent implements OnInit {
                 this.transformarXMLParaJSON(responseError.error.text)
                 this.formatarProcessoJSON(JSON.parse(String(this.json)));
                 this.carregamentoInformacao = false;
+                this.inputValue = "";
               }
           );
       }
@@ -176,6 +177,10 @@ export class ProcessosTableComponent implements OnInit {
       this.xml = xml.documentElement.outerHTML;
       this.processoXML = this.sanitizer.bypassSecurityTrustHtml(this.xml);
     }
+
+  //********************************************************
+  //           Formulario Modal (Consultar Unidade)
+  //********************************************************
   
     rastrearInput(e:any){
       this.inputValue = e.target.value;
@@ -183,7 +188,6 @@ export class ProcessosTableComponent implements OnInit {
 
     enviarFormulario(e:any){
       e.preventDefault();
-      this.inputValue = "";
       this.fecharModal();
     }
 
@@ -226,7 +230,7 @@ export class ProcessosTableComponent implements OnInit {
       if(this.modalTitle == "Petição" || this.modalTitle == "Conclusão" || this.modalTitle == "Desistência"){
         this.modalLabelTitle =`Tempo da ${this.modalTitle}`;
       }
-      
+
       document.querySelector('.modal')?.firstElementChild?.classList.add('h-200px');
 
     }
